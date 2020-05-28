@@ -38,11 +38,16 @@ public class FileArchive {
      *
      * @param inFilesToCompress List of files to compress.
      * @param outCompressFile After compression zip file saved to this location.
-     * @return
+     * @return status message of method call
      */
-    public File compressFilesToZIP(List<File> inFilesToCompress, File outCompressFile) {
-
-        return null;
+    public String compressFilesToZIP(List<File> inFilesToCompress, File outCompressFile) {
+        String status = "Something went wrong.";
+        //list files
+        //verify
+        //compress
+        //verify compressed file
+        //return
+        return status;
     }
 
     /**

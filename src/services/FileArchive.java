@@ -17,6 +17,7 @@
 package services;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -33,12 +34,24 @@ import java.io.File;
 public class FileArchive {
 
 
-    public File compressZIP() {
+    /**
+     *
+     * @param inFilesToCompress List of files to compress.
+     * @param outCompressFile After compression zip file saved to this location.
+     * @return
+     */
+    public File compressFilesToZIP(List<File> inFilesToCompress, File outCompressFile) {
 
         return null;
     }
 
-    public File deCompressZIP() {
+    /**
+     *
+     * @param inCompressedZipFile Zip File to decompress.
+     * @param outDecompressInDirectory Directory to save decompressed files.
+     * @return
+     */
+    public File deCompressFilesToZIP(File inCompressedZipFile, File outDecompressInDirectory) {
 
         return null;
     }

@@ -14,14 +14,7 @@
  * limitations under the License.
  */
 
-package services.archive;
+package fileReOrg.ui.reorganise;
 
-import java.io.IOException;
-
-public interface Archive {
-    final static int BUFFER_LIMIT = 1024;
-
-    public int archive(String sourceFilePath, String archiveFileName) throws IOException;
-
-    public int extract(String archiveFileName, String destinationFilePath) throws IOException;
+public class Reorganise {
 }

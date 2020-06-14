@@ -14,23 +14,4 @@
  * limitations under the License.
  */
 
-package services;
-
-/**
- * {@link FileOrganise}
- *
- * Provide methods for file compression and decompression.<br><br>
- *
- * Use appropriate library.<br><br>
- *
- * Should be able to support zip, 7z and rar formats.
- *
- * @version 1.0.0
- * @see ui.FROAppController
- */
-
-public class FileOrganise {
-
-
-
-}
+package fileReOrg.services.archive;

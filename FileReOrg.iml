@@ -7,8 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/test_resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/fileReOrg/res" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="SevenZip" level="project" />
+    <orderEntry type="library" name="gson-2.3" level="project" />
   </component>
 </module>

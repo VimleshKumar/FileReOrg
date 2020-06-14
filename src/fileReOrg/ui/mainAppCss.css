@@ -1,0 +1,171 @@
+/*
+ * Copyright (c) 2020.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*----------------------- Root -----------------------------*/
+
+*{
+    -color-p: #141414;
+    -color-plight: #333333;
+    -color-pdark: #080808;
+    -color-ptext:#cccccc;
+    -color-s:#0277bd;
+    -color-slight:#0288d1;
+    -color-sdark:#01579b;
+    -color-stext:#eeeeee;
+    -color-error:#e64a19;
+    -color-green:#00bfa5;
+    -color-console:#c7f832;
+}
+
+/*----------------------- Class -----------------------------*/
+
+.mainFxmlClass {
+    -fx-background-color: -color-pdark;
+}
+
+.label{
+    -fx-font-family:Segoe UI;
+    -fx-text-fill: -color-ptext;
+}
+.button{
+    -fx-font-family:Segoe UI;
+    -fx-text-fill: -color-ptext;
+    -fx-font-size: 14;
+    -fx-background-color: transparent;
+    -fx-border-color: #333333;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.context-menu{
+    -fx-background-color:-color-pdark;
+}
+
+.menu-bar{
+    -fx-background-color:-color-pdark;
+    -fx-text-fill: -fx-color-ptext;
+    -fx-border-color: #333333;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu-button:hover, .menu-button:focused, .menu-button:showing{
+    -fx-background-color: -color-plight;
+    -fx-text-fill: -color-ptext;
+}
+
+.menu-item{
+    -fx-background-color:-color-pdark;
+    -fx-text-fill: -fx-color-ptext;
+}
+
+.menu-item:hover, .menu-item:focused, .menu-item:showing{
+    -fx-background-color: -color-plight;
+    -fx-text-fill: -color-ptext;
+}
+
+.list-view{
+    -fx-background-color: -color-pdark;
+}
+
+.tree-view{
+    -fx-background-color: -color-pdark;
+    -fx-border-color: -color-pdark;
+}
+
+.tree-view .tree-cell{
+    -fx-background-color: -color-pdark;
+    -fx-border-color: transparent;
+}
+
+.tool-bar{
+    -fx-background-color: -color-pdark;
+}
+
+.text-field{
+    -fx-background-color: -color-plight;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: -color-ptext;
+    -fx-font-family:Segoe UI;
+    -fx-text-fill: -color-ptext;
+    -fx-font-size: 14;
+}
+
+/*----------------------- ID -----------------------------*/
+
+#title-bar{
+    -fx-border-color: #333333;
+    -fx-border-width: 0 0 1 0;
+}
+
+#titlebar-btn:hover{
+    -fx-background-color: -color-plight;
+    -fx-border-color: -color-p;
+    -fx-border-width: 0px;
+    -fx-border-radius: 2px;
+    -fx-background-radius: 10px;
+}
+
+#footer-pane{
+    -fx-border-color: #333333;
+    -fx-border-width: 1 0 0 0;
+}
+
+#header-pane{
+    -fx-font-size: 24px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #db7093;
+}
+
+/*#archive-footer-pane{*/
+/*    -fx-border-color: #333333;*/
+/*    -fx-border-width: 1 0 0 0;*/
+/*}*/
+
+#btn-without-border{
+    -fx-background-color: -color-p;
+    -fx-border-color: -color-p;
+    -fx-text-fill: -color-ptext;
+}
+
+
+#btn-without-border:pressed{
+    -fx-background-color: -color-plight;
+    -fx-border-color: -color-plight;
+    -fx-text-fill: -color-ptext;
+}
+
+#vbox-bordered{
+    -fx-background-color: -color-plight;
+    -fx-border-color: -color-plight;
+    -fx-text-fill: -color-ptext;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#dark-blue-btn{
+    -fx-background-color: #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+}

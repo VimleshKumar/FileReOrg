@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SevenZip">
+    <CLASSES>
+      <root url="jar://C:/JavaLib/SevenZip.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

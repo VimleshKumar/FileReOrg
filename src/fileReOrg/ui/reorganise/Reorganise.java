@@ -14,33 +14,7 @@
  * limitations under the License.
  */
 
-package services;
+package fileReOrg.ui.reorganise;
 
-import java.io.File;
-
-/**
- * <p>
- * {@link FileArchive}
- * <p>
- * provides methods for file compression and decompression.<br>
- * Use appropriate library wherever it needs.<br>
- * Should be able to support zip, 7z and rar formats.
- *
- * @version 1.0.0
- * @see ui.FROAppController
- */
-
-public class FileArchive {
-
-
-    public File compressZIP() {
-
-        return null;
-    }
-
-    public File deCompressZIP() {
-
-        return null;
-    }
-
+public class Reorganise {
 }

@@ -16,9 +16,13 @@
 
 package fileReOrg.ui;
 
+import fileReOrg.beans.FileDetailBean;
+import fileReOrg.services.MimeTable;
+import fileReOrg.services.TypeFolderProp;
 import fileReOrg.services.archive.Archive;
 import fileReOrg.services.archive.SevenZipArchive;
 import fileReOrg.services.archive.ZipArchive;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,17 +38,20 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.tika.Tika;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Date;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class MainAppController {
 
@@ -107,6 +114,10 @@ public class MainAppController {
     @FXML
     private VBox ReorganisePane;
     @FXML
+    private Button btnRoRemove;
+    @FXML
+    private Button btnRoClear;
+    @FXML
     private TextField txtSourceDirectory;
     @FXML
     private Button btnRoBrowserSource;
@@ -122,6 +133,16 @@ public class MainAppController {
     private ImageView footerLockStatus;
     @FXML
     private Label footerCredit;
+    @FXML
+    private TableView<FileDetailBean> tblFilesRo;
+    @FXML
+    private TableColumn<FileDetailBean, String> tColFileName;
+    @FXML
+    private TableColumn<FileDetailBean, String> tColSourcePath;
+    @FXML
+    private TableColumn<FileDetailBean, String> tColFileType;
+    @FXML
+    private TableColumn<FileDetailBean, String> tColDestinationPath;
 
 
     @FXML
@@ -150,6 +171,13 @@ public class MainAppController {
         assert btnFaExtract != null : "fx:id=\"btnFaExtract\" was not injected: check your FXML file 'mainApp.fxml'.";
         assert btnFaArchive != null : "fx:id=\"btnFaArchive\" was not injected: check your FXML file 'mainApp.fxml'.";
         assert ReorganisePane != null : "fx:id=\"ReorganisePane\" was not injected: check your FXML file 'mainApp.fxml'.";
+        assert tblFilesRo != null : "fx:id=\"tblFilesRo\" was not injected: check your FXML file 'mainApp.fxml'.";
+        assert tColFileName != null : "fx:id=\"tColFileName\" was not injected: check your FXML file 'mainApp.fxml'.";
+        assert tColSourcePath != null : "fx:id=\"tColSourcePath\" was not injected: check your FXML file 'mainApp.fxml'.";
+        assert tColFileType != null : "fx:id=\"tColFileType\" was not injected: check your FXML file 'mainApp.fxml'.";
+        assert tColDestinationPath != null : "fx:id=\"tColDestinationPath\" was not injected: check your FXML file 'mainApp.fxml'.";
+        assert btnRoRemove != null : "fx:id=\"btnRoRemove\" was not injected: check your FXML file 'mainApp.fxml'.";
+        assert btnRoClear != null : "fx:id=\"btnRoClear\" was not injected: check your FXML file 'mainApp.fxml'.";
         assert txtSourceDirectory != null : "fx:id=\"txtSourceDirectory\" was not injected: check your FXML file 'mainApp.fxml'.";
         assert btnRoBrowserSource != null : "fx:id=\"btnRoBrowserSource\" was not injected: check your FXML file 'mainApp.fxml'.";
         assert txtOutputDirectoryReorganiser != null : "fx:id=\"txtOutputDirectoryReorganiser\" was not injected: check your FXML file 'mainApp.fxml'.";
@@ -160,8 +188,8 @@ public class MainAppController {
         assert footerCredit != null : "fx:id=\"footerCredit\" was not injected: check your FXML file 'mainApp.fxml'.";
 
         //load File Archiver window
-        ArchivePane.setVisible(true);
-        ReorganisePane.setVisible(false);
+        ArchivePane.setVisible(false);
+        ReorganisePane.setVisible(true);
 
         //bind title bar button handler
         titleBarBtnClose.setOnAction(closeButtonHandler);
@@ -194,8 +222,26 @@ public class MainAppController {
         btnFaExtract.setOnAction(btnFaExtractHandler);
         btnFaDirectoryBrowse.setOnAction(btnFaDirectoryBrowserHandler);
 
-        //Reorganiser button-handler binding //TODO bind all methods
+        //Reorganiser button-handler binding
+        btnReorganise.setOnAction(btnReorganiseHandler);
+        btnRoBrowserOutput.setOnAction(btnRoBrowserOutputHandler);
+        btnRoBrowserSource.setOnAction(btnRoBrowserSourceHandler);
+        btnRoClear.setOnAction(btnRoClearHandler);
+        btnRoRemove.setOnAction(btnRoRemoveHandler);
 
+        //Table processing
+        //set column width
+        tColFileName.setPrefWidth(150.0);
+        tColFileType.setPrefWidth(150.0);
+        tColSourcePath.prefWidthProperty().bind(tblFilesRo.widthProperty().subtract(302.0).multiply(0.5));
+        tColDestinationPath.prefWidthProperty().bind(tblFilesRo.widthProperty().subtract(302.0).multiply(0.5));
+        //set table data
+        tblFilesRo.setItems(FILE_DETAIL_BEANS);
+        //set column values
+        tColFileName.setCellValueFactory(file -> file.getValue().fileNameProperty());
+        tColSourcePath.setCellValueFactory(file -> file.getValue().fileSourcePathProperty());
+        tColFileType.setCellValueFactory(file -> file.getValue().fileTypeProperty());
+        tColDestinationPath.setCellValueFactory(file -> file.getValue().fileDestinationPathProperty());
 
         //populate file browser
         String hostName = null;
@@ -365,9 +411,11 @@ public class MainAppController {
         directoryChooser.setTitle("Select output directory");
         Stage stage = (Stage) this.titleBarPane.getScene().getWindow();
         File f = directoryChooser.showDialog(stage);
-        if (f != null) {
+        if (f != null && f.isDirectory()) {
             this.txtOutputDirectoryArchiver.setText(f.getAbsolutePath());
             footerMessage.setText("Output Directory Selected.");
+        } else {
+            footerMessage.setText("Output Directory not valid!");
         }
     };
 
@@ -399,6 +447,7 @@ public class MainAppController {
                         for (String file : filesList) {
                             String fileNameWithOutExt = FilenameUtils.removeExtension(new File(file).getName());
                             String archiveFileName = outputFilePath + File.separator + fileNameWithOutExt + "_" + new Date().getTime() + archiveExtension;
+//                            String archiveFileName = outputFilePath + File.separator + fileNameWithOutExt + archiveExtension;
                             archiveFile(file, archiveFileName, archive);
                         }
                     } catch (Exception e) {
@@ -422,7 +471,7 @@ public class MainAppController {
 //                    footerMessage.setText("Archiving("+threadCount+"/"+maxThreadCount+")");
                     threadCount++;
                     maxThreadCount++;
-                    System.out.println("Actual Thread Count: " + java.lang.Thread.activeCount());
+//                    System.out.println("Actual Thread Count: " + java.lang.Thread.activeCount());
                     System.out.println("Thread Count: " + threadCount);
                     archive.archive(sourceFile, destFile);
                     threadCount--;
@@ -443,17 +492,235 @@ public class MainAppController {
 
     //Extract
     EventHandler<ActionEvent> btnFaExtractHandler = (ActionEvent event) -> {
+        setFooterMessage("Not included in this release. Scheduled for next release.");
     };
 
 
     /**
-     * Reorganizer EventHandler //TODO add event handlers
+     * Reorganizer EventHandler
      */
+    private static final ObservableList<FileDetailBean> FILE_DETAIL_BEANS = FXCollections.observableArrayList();
+    // btnRoBrowserSource
+    EventHandler<ActionEvent> btnRoBrowserSourceHandler = (ActionEvent event) -> {
+        FILE_DETAIL_BEANS.clear();
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select source directory");
+        Stage stage = (Stage) this.titleBarPane.getScene().getWindow();
+        File f = directoryChooser.showDialog(stage);
+        if (f != null && f.isDirectory()) {
+            List<File> files = listFiles(f);
+            FileDetailBean fb;
+            for (File file:files) {
+                fb = new FileDetailBean(file.getName(), file.getAbsolutePath(), "", "", "");
+                FILE_DETAIL_BEANS.add(fb);
+            }
+            txtSourceDirectory.setText(f.getAbsolutePath());
+            txtOutputDirectoryReorganiser.setText(f.getAbsolutePath() + File.separator + "ReOrganised");
+        } else {
+            setFooterMessage("Invalid Directory!");
+        }
+    };
+    List<File> listFiles(File file){
+        List<File> files = new ArrayList<>();
+        if(file.isFile()){
+            files.add(file);
+        } else if(file.isDirectory()){
+            File[] fs = file.listFiles();
+            for (File f: fs){
+                files.addAll(listFiles(f));
+            }
+        }
+        return files;
+    }
+    // btnRoBrowserOutput
+    EventHandler<ActionEvent> btnRoBrowserOutputHandler = (ActionEvent event) -> {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select output directory");
+        Stage stage = (Stage) this.titleBarPane.getScene().getWindow();
+        File f = directoryChooser.showDialog(stage);
+        if (f != null && f.isDirectory()) {
+            this.txtOutputDirectoryReorganiser.setText(f.getAbsolutePath());
+            footerMessage.setText("Output Directory Selected.");
+        } else {
+            footerMessage.setText("Output Directory not valid!");
+        }
+    };
+    // btnRoClear
+    EventHandler<ActionEvent> btnRoClearHandler = (ActionEvent event) -> {
+        if(FILE_DETAIL_BEANS.size() > 0) {
+            FILE_DETAIL_BEANS.clear();
+            tblFilesRo.refresh();
+            footerMessage.setText("All Files Cleared.");
+        } else {
+            setFooterMessage("There's nothing to clear!");
+        }
+    };
+    // btnRoRemove
+    EventHandler<ActionEvent> btnRoRemoveHandler = (ActionEvent event) -> {
+        if (!FILE_DETAIL_BEANS.isEmpty()) {
+            FileDetailBean fileDetailBean = tblFilesRo.getSelectionModel().getSelectedItem();
+            if (fileDetailBean != null) {
+                FILE_DETAIL_BEANS.remove(fileDetailBean);
+                tblFilesRo.refresh();
+                setFooterMessage("Selected File Deleted!");
+            } else {
+                setFooterMessage("Empty row selected!");
+            }
+        } else {
+            setFooterMessage("There's nothing to Delete!");
+        }
+    };
+
+
+    // btnReorganise
+    EventHandler<ActionEvent> btnReorganiseHandler = (ActionEvent event) -> {
+        if(!processRunning){
+            if (isReorganizable()) {
+                if(moveReorganisedFiles()){
+                    setFooterMessage("Reorganisation Complete.");
+                }
+            }
+        } else {
+            setFooterMessage("System Busy! Wait for status to turn green.");
+        }
+    };
+
+    boolean isReorganizable(){
+        if(txtOutputDirectoryReorganiser.getText().equalsIgnoreCase("") || FILE_DETAIL_BEANS.isEmpty()){
+            setFooterMessage("Something went wrong! Check all input values. ");
+            return false;
+        } else if(new File(txtOutputDirectoryReorganiser.getText()).exists() && new File(txtOutputDirectoryReorganiser.getText()).isDirectory()){
+            if (!isFolderEmpty(new File(txtOutputDirectoryReorganiser.getText()))) {
+                setFooterMessage("Output folder is not empty!");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    boolean moveReorganisedFiles(){
+        try {
+            File outDir = new File(txtOutputDirectoryReorganiser.getText());
+            if (!outDir.exists() || !outDir.isDirectory() || !isFolderEmpty(outDir)) {
+                outDir.mkdirs();
+            }
+            if(!outDir.canWrite()) {
+                setFooterMessage("Output Folder is not writable.");
+                return false;
+            }
+            //TODO use Java Enum for file/folder types
+            File documents = new File(outDir.getAbsolutePath() + File.separator + "documents");
+            File videos = new File(outDir.getAbsolutePath() + File.separator + "videos");
+            File audios = new File(outDir.getAbsolutePath() + File.separator + "audios");
+            File images = new File(outDir.getAbsolutePath() + File.separator + "images");
+            File applications = new File(outDir.getAbsolutePath() + File.separator + "applications");
+            File archives = new File(outDir.getAbsolutePath() + File.separator + "archives");
+            File unidentified = new File(outDir.getAbsolutePath() + File.separator + "unidentified");
+            try {
+                documents.mkdirs();
+                videos.mkdirs();
+                audios.mkdirs();
+                images.mkdirs();
+                applications.mkdirs();
+                archives.mkdirs();
+                unidentified.mkdirs();
+            } catch (Exception e) {
+                e.printStackTrace();
+                setFooterMessage("Sub directories can not be created. Try Again.");
+                return false;
+            }
+            for(FileDetailBean fileDetailBean: FILE_DETAIL_BEANS){
+                String mimeType = probeFileTypeUsingTika(new File(fileDetailBean.getFileSourcePath()));
+                fileDetailBean.setFileType(MimeTable.getValue(mimeType.trim()).trim());
+                fileDetailBean.setMimeType(mimeType);
+                String desFolder = TypeFolderProp.getValue(fileDetailBean.getMimeType());
+                if(desFolder.charAt(0) == '!'){
+                    if(desFolder.contains("audio")){
+                        desFolder = "audios";
+                    } else if(desFolder.contains("video")){
+                        desFolder = "videos";
+                    } else if(desFolder.contains("image")){
+                        desFolder = "images";
+                    } else {
+                        desFolder = "unidentified";
+                    }
+                }
+                String destinationPath = outDir.getAbsolutePath() + File.separator + desFolder + File.separator + fileDetailBean.getFileName();
+                File source = new File(fileDetailBean.getFileSourcePath());
+                File destination = new File(destinationPath);
+                if(destination.exists()){
+                    String suffix = "_from_" + source.toPath().getParent().toFile().getName(); //get parent directory name
+                    if(suffix == null || suffix.equalsIgnoreCase("")){
+                        suffix = "_1";
+                    }
+                    suffix = suffix.replaceAll("[^a-zA-Z0-9/_]", ""); //special chars cleanup
+                    destinationPath = outDir.getAbsolutePath() + File.separator + desFolder + File.separator
+                            + FilenameUtils.removeExtension(fileDetailBean.getFileName()) + suffix +"."
+                            + FilenameUtils.getExtension(fileDetailBean.getFileName());
+                    destination = new File(destinationPath);
+                }
+                System.out.println("S: " + source.getAbsolutePath());
+                System.out.println("D: " + destination.getAbsolutePath());
+                Files.copy(source.toPath(), destination.toPath()); //TODO change to move after adding rollback functionality to avoid file loss
+                fileDetailBean.setFileDestinationPath(destinationPath);
+            }
+        } catch (Exception e) {
+            setFooterMessage("Something went wrong while moving files!");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    boolean isFolderEmpty(File out){
+        if(out.listFiles().length > 0){
+            return false;
+        }
+        return true;
+    }
+
+    //TODO delete after release. Reason: Not in use anymore(causing extra iteration)
+    boolean processFilesForReorganisation(){
+        if(FILE_DETAIL_BEANS.isEmpty()){
+            return false;
+        } else {
+            for (FileDetailBean fdb : FILE_DETAIL_BEANS){
+                String mimeType = probeFileTypeUsingTika(new File(fdb.getFileSourcePath()));
+                fdb.setFileType(MimeTable.getValue(mimeType.trim()).trim());
+                fdb.setMimeType(mimeType);
+            }
+            tblFilesRo.refresh();
+            return true;
+        }
+    }
+
+    String probeFileTypeUsingTika(File file){
+
+        String fileType= "Unidentified";
+        try {
+            Tika tika = new Tika();
+            fileType = tika.detect(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileType;
+    }
+
+    String probeFileType(File file){
+
+        String fileType= "Unidentified";
+        try {
+            fileType = Files.probeContentType(file.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileType;
+    }
+
 
     /**
      * Other utility methods
      */
-
     //Close Application
     void closeApp(Stage stage) {
         if (processRunning) {

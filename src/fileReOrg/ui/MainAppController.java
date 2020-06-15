@@ -265,9 +265,8 @@ public class MainAppController {
         this.listViewFiles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         //set default output directory
-//        this.txtOutputDirectoryArchiver.setText(System.getProperty("user.home"));
+        this.txtOutputDirectoryArchiver.setText(System.getProperty("user.home"));
 //        this.txtOutputDirectoryReorganiser.setText(System.getProperty("user.home"));
-        this.txtOutputDirectoryArchiver.setText("E:\\test\\out"); //TODO delete after testing
 
         //set lock status
         unlock();
@@ -325,8 +324,10 @@ public class MainAppController {
     EventHandler<ActionEvent> miAboutHanlder = (ActionEvent event) -> {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About File ReOrg");
-        alert.setHeaderText("File ReOrg");
-        alert.setContentText("This is a data organiser tool. It can help in reorganising data and archiving data.");
+        alert.setHeaderText("File ReOrg v1.0.0-beta");
+        alert.setContentText("This is a data organiser tool. It can help in reorganising data and archiving data.\n" +
+                "Developed By Oceidus Team.\n" +
+                "Developers: Jyoti Kumari & Vimlesh Kumar");
         alert.show();
     };
 

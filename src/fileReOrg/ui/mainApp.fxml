@@ -471,7 +471,7 @@
                               <Image url="@../res/ok.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="footerCredit" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="177.0" text="|    Developed by Vimlesh Kumar" HBox.hgrow="NEVER">
+                        <Label fx:id="footerCredit" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="177.0" text="|    Developed by Oceidus Team" HBox.hgrow="NEVER">
                            <padding>
                               <Insets right="5.0" />
                            </padding>

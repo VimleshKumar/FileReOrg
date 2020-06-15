@@ -19,7 +19,7 @@ package fileReOrg.services.archive;
 import java.io.IOException;
 
 public interface Archive {
-    final static int BUFFER_LIMIT = 1024;
+    final static int BUFFER_LIMIT = 4096;
 
     public boolean archive(String sourceFilePath, String archiveFileName) throws IOException;
 

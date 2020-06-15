@@ -80,6 +80,29 @@
     -fx-background-color: -color-pdark;
 }
 
+.list-view .list-cell{
+    -fx-background-color: -color-pdark;
+    -fx-text-fill: -color-ptext;
+}
+
+.list-view .list-cell:selected{
+    -fx-background-color: -color-plight;
+}
+
+.list-view>.virtual-flow>.scroll-bar:vertical,
+.list-view>.virtual-flow>.scroll-bar:vertical>.track,
+.list-view>.virtual-flow>.scroll-bar:vertical>.track-background,
+.list-view>.virtual-flow>.scroll-bar:horizontal,
+.list-view>.virtual-flow>.scroll-bar:horizontal>.track,
+.list-view>.virtual-flow>.scroll-bar:horizontal>.track-background {
+    -fx-background-color:transparent;
+}
+
+.list-view>.virtual-flow > .scroll-bar >.incremental-button,
+.list-view>.virtual-flow > .scroll-bar >.incremental-button{
+    -fx-opacity:0;
+}
+
 .tree-view{
     -fx-background-color: -color-pdark;
     -fx-border-color: -color-pdark;
@@ -87,7 +110,25 @@
 
 .tree-view .tree-cell{
     -fx-background-color: -color-pdark;
-    -fx-border-color: transparent;
+    -fx-text-fill: -color-ptext;
+}
+
+.tree-view .tree-cell:selected{
+    -fx-background-color: -color-plight;
+}
+
+.tree-view>.virtual-flow>.scroll-bar:vertical,
+.tree-view>.virtual-flow>.scroll-bar:vertical>.track,
+.tree-view>.virtual-flow>.scroll-bar:vertical>.track-background,
+.tree-view>.virtual-flow>.scroll-bar:horizontal,
+.tree-view>.virtual-flow>.scroll-bar:horizontal>.track,
+.tree-view>.virtual-flow>.scroll-bar:horizontal>.track-background {
+    -fx-background-color:transparent;
+}
+
+.tree-view>.virtual-flow > .scroll-bar >.incremental-button,
+.tree-view>.virtual-flow > .scroll-bar >.incremental-button{
+    -fx-opacity:0;
 }
 
 .tool-bar{

@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
@@ -47,31 +48,31 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="90.0" StackPane.alignment="CENTER_RIGHT">
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="75.0" StackPane.alignment="CENTER_RIGHT">
                      <children>
                         <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" spacing="5.0">
                            <children>
-                              <Button id="btn-without-border" fx:id="titleBarBtnMin" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+                              <Button id="btn-without-border" fx:id="titleBarBtnMin" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0">
                                  <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../res/minimize-active.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button id="btn-without-border" fx:id="titleBarBtnMax" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+                              <Button id="btn-without-border" fx:id="titleBarBtnMax" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0">
                                  <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../res/maximize-active.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button id="btn-without-border" fx:id="titleBarBtnClose" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+                              <Button id="btn-without-border" fx:id="titleBarBtnClose" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0">
                                  <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../res/close.png" />
                                        </image>
@@ -112,7 +113,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                <children>
-                  <VBox fx:id="ArchivePane" alignment="CENTER" layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox fx:id="ArchivePane" alignment="CENTER" layoutX="5.0" layoutY="5.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label id="header-pane" alignment="CENTER" contentDisplay="CENTER" text="File Archiver" VBox.vgrow="NEVER">
                            <padding>
@@ -124,7 +125,9 @@
                               <VBox HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="Select files to process" VBox.vgrow="NEVER" />
-                                    <TreeView style="-fx-background-color: black;" VBox.vgrow="ALWAYS" />
+                                    <Separator prefWidth="200.0" />
+                                    <TreeView fx:id="treeViewFileExplorer" style="-fx-background-color: black;" VBox.vgrow="ALWAYS" />
+                                    <Separator prefWidth="200.0" />
                                     <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">
                                       <items>
                                         <Button id="btn-without-border" fx:id="btnFaAddFile" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Add File">
@@ -141,10 +144,13 @@
                                     </ToolBar>
                                  </children>
                               </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
                               <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="List of files to process" VBox.vgrow="NEVER" />
-                                    <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                    <Separator prefWidth="200.0" />
+                                    <ListView fx:id="listViewFiles" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                    <Separator prefWidth="200.0" />
                                     <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">
                                        <items>
                                           <Button id="btn-without-border" fx:id="btnFaRemoveAll" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Remove All File">
@@ -183,7 +189,7 @@
                                     <Label text="Output Directory :" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <TextField fx:id="txtOutputDirectory" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" HBox.hgrow="ALWAYS" />
+                                          <TextField fx:id="txtOutputDirectoryArchiver" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" HBox.hgrow="ALWAYS" />
                                           <Button id="btn-without-border" fx:id="btnFaDirectoryBrowse" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="Directory" HBox.hgrow="NEVER">
                                              <graphic>
                                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -208,10 +214,10 @@
                               </VBox>
                               <VBox id="vbox-bordered" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="185.0" spacing="10.0" HBox.hgrow="NEVER">
                                  <children>
-                                    <Label text="Select Format" VBox.vgrow="NEVER" />
+                                    <Label text="Archive Type" VBox.vgrow="NEVER" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <RadioButton fx:id="rbFaFormat7z" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="7z">
+                                          <RadioButton fx:id="rbFaFormat7z" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="7ZIP">
                                              <graphic>
                                                 <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -291,7 +297,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="ReorganisePane" alignment="CENTER" layoutX="15.0" layoutY="15.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox fx:id="ReorganisePane" alignment="CENTER" layoutX="15.0" layoutY="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label id="header-pane" alignment="CENTER" contentDisplay="CENTER" text="File Reorganiser" VBox.vgrow="NEVER">
                            <padding>
@@ -299,7 +305,9 @@
                            </padding>
                         </Label>
                         <Label text="List of files to process" VBox.vgrow="NEVER" />
+                        <Separator prefWidth="200.0" />
                         <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                        <Separator prefWidth="200.0" />
                         <HBox id="archive-footer-pane" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" spacing="10.0" VBox.vgrow="NEVER">
                            <children>
                               <VBox id="vbox-bordered" alignment="CENTER" layoutX="600.0" layoutY="15.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="90.0" spacing="10.0" HBox.hgrow="ALWAYS">
@@ -307,7 +315,7 @@
                                     <Label text="Source Directory :" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <TextField fx:id="txtSourceDirectory" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" HBox.hgrow="ALWAYS" />
+                                          <TextField fx:id="txtSourceDirectory" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" HBox.hgrow="ALWAYS" />
                                           <Button id="btn-without-border" fx:id="btnRoBrowserSource" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="Directory" HBox.hgrow="NEVER">
                                              <graphic>
                                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -335,7 +343,7 @@
                                     <Label text="Output Directory :" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <TextField fx:id="txtOutputDirectory" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" HBox.hgrow="ALWAYS" />
+                                          <TextField fx:id="txtOutputDirectoryReorganiser" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" HBox.hgrow="ALWAYS" />
                                           <Button id="btn-without-border" fx:id="btnRoBrowserOutput" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="Directory" HBox.hgrow="NEVER">
                                              <graphic>
                                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -393,15 +401,15 @@
                <children>
                   <HBox alignment="CENTER_LEFT" spacing="10.0" StackPane.alignment="CENTER">
                      <children>
-                        <Label fx:id="footerMessage" maxWidth="1.7976931348623157E308" text="message" HBox.hgrow="ALWAYS">
+                        <Label fx:id="footerMessage" maxWidth="1.7976931348623157E308" text="Loading..." HBox.hgrow="ALWAYS">
                            <padding>
                               <Insets left="5.0" />
                            </padding>
                         </Label>
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefWidth="65.0" text="   |    Status: " visible="false" HBox.hgrow="NEVER" />
-                        <ImageView fx:id="footerLockStatus" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="false" HBox.hgrow="NEVER">
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefWidth="65.0" text="   |    Status: " HBox.hgrow="NEVER" />
+                        <ImageView fx:id="footerLockStatus" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
                            <image>
-                              <Image url="@../res/unlock.png" />
+                              <Image url="@../res/ok.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="footerCredit" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="177.0" text="|    Developed by Vimlesh Kumar" HBox.hgrow="NEVER">

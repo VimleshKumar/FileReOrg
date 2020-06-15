@@ -131,6 +131,52 @@
     -fx-opacity:0;
 }
 
+.table-view {
+    -fx-background-color: -color-pdark;
+}
+
+.table-view header{
+    -fx-background-color: -color-p;
+}
+
+.table-view .label{
+    -fx-background-color: -color-p;
+}
+
+.table-view .cell{
+    -fx-background-color: -color-pdark;
+    -fx-text-fill: -color-ptext;
+    -fx-alignment: center-left;
+    -fx-border-color: -color-pdark;
+}
+
+.table-view .cell:selected{
+    -fx-border-color: -color-plight;
+}
+
+.column{
+    -fx-background-color: -color-pdark;
+}
+.column-header{
+    -fx-text-fill: -color-ptext;
+    -fx-background-color: -color-pdark;
+}
+
+.table-view>.virtual-flow>.scroll-bar:vertical,
+.table-view>.virtual-flow>.scroll-bar:vertical>.track,
+.table-view>.virtual-flow>.scroll-bar:vertical>.track-background,
+.table-view>.virtual-flow>.scroll-bar:horizontal,
+.table-view>.virtual-flow>.scroll-bar:horizontal>.track,
+.table-view>.virtual-flow>.scroll-bar:horizontal>.track-background {
+    -fx-background-color:transparent;
+}
+
+.table-view>.virtual-flow > .scroll-bar >.incremental-button,
+.table-view>.virtual-flow > .scroll-bar >.incremental-button{
+    -fx-opacity:0;
+}
+
+
 .tool-bar{
     -fx-background-color: -color-pdark;
 }

@@ -14,5 +14,6 @@
     <orderEntry type="library" name="SevenZip" level="project" />
     <orderEntry type="library" name="gson-2.3" level="project" />
     <orderEntry type="library" name="commons-io-2.7" level="application" />
+    <orderEntry type="library" name="tika-core-1.24.1" level="application" />
   </component>
 </module>

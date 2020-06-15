@@ -9,6 +9,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
@@ -127,57 +129,68 @@
                                     <Label text="Select files to process" VBox.vgrow="NEVER" />
                                     <Separator prefWidth="200.0" />
                                     <TreeView fx:id="treeViewFileExplorer" style="-fx-background-color: black;" VBox.vgrow="ALWAYS" />
-                                    <Separator prefWidth="200.0" />
-                                    <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">
-                                      <items>
-                                        <Button id="btn-without-border" fx:id="btnFaAddFile" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Add File">
+                                    <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" style="-fx-border-width: 2 0 0 0; -fx-border-color: #333;" VBox.vgrow="NEVER">
+                                       <children>
+                                        <Button id="btn-without-border" fx:id="btnFaAddFile" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Add File" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                              <graphic>
                                                 <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
                                                       <Image url="@../res/add-file.png" />
-                                                   </image></ImageView>
+                                                   </image>
+                                                </ImageView>
                                              </graphic>
                                              <tooltip>
                                                 <Tooltip text="Add File" />
-                                             </tooltip></Button>
-                                      </items>
-                                    </ToolBar>
+                                             </tooltip>
+                                          </Button>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" top="5.0" />
+                                       </padding>
+                                    </AnchorPane>
                                  </children>
                               </VBox>
-                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
                               <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="List of files to process" VBox.vgrow="NEVER" />
                                     <Separator prefWidth="200.0" />
-                                    <ListView fx:id="listViewFiles" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                                    <Separator prefWidth="200.0" />
-                                    <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">
-                                       <items>
-                                          <Button id="btn-without-border" fx:id="btnFaRemoveAll" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Remove All File">
-                                             <tooltip>
-                                                <Tooltip text="Remove All File" />
-                                             </tooltip>
-                                             <graphic>
-                                                <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../res/remove.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </graphic></Button>
-                                          <Button id="btn-without-border" fx:id="btnFaRemoveSelected" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Remove Selected File">
-                                             <tooltip>
-                                                <Tooltip text="Remove Selected File" />
-                                             </tooltip>
-                                             <graphic>
-                                                <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../res/delete-file.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </graphic>
-                                          </Button>
-                                       </items>
-                                    </ToolBar>
+                                    <ListView fx:id="listViewFiles" VBox.vgrow="ALWAYS" />
+                                    <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" style="-fx-border-width: 2 0 0 0; -fx-border-color: #333;" VBox.vgrow="NEVER">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" top="5.0" />
+                                       </padding>
+                                       <children>
+                                          <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <items>
+                                                <Button id="btn-without-border" fx:id="btnFaRemoveAll" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Remove All File">
+                                                   <tooltip>
+                                                      <Tooltip text="Remove All File" />
+                                                   </tooltip>
+                                                   <graphic>
+                                                      <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../res/remove.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                                <Button id="btn-without-border" fx:id="btnFaRemoveSelected" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Remove Selected File">
+                                                   <tooltip>
+                                                      <Tooltip text="Remove Selected File" />
+                                                   </tooltip>
+                                                   <graphic>
+                                                      <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../res/delete-file.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </items>
+                                          </ToolBar>
+                                       </children>
+                                    </AnchorPane>
                                  </children>
                               </VBox>
                            </children>
@@ -256,7 +269,7 @@
                                     <Label text="Click to Process" VBox.vgrow="NEVER" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <Button id="btn-without-border" fx:id="btnFaExtract" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Extract" HBox.hgrow="NEVER">
+                                          <Button id="btn-without-border" fx:id="btnFaExtract" contentDisplay="GRAPHIC_ONLY" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Extract" visible="false" HBox.hgrow="NEVER">
                                              <graphic>
                                                 <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -272,7 +285,7 @@
                                              <graphic>
                                                 <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../res/icons8-archive-100.png" />
+                                                      <Image url="@../res/archive-folder.png" />
                                                    </image>
                                                 </ImageView>
                                              </graphic>
@@ -305,9 +318,55 @@
                            </padding>
                         </Label>
                         <Label text="List of files to process" VBox.vgrow="NEVER" />
-                        <Separator prefWidth="200.0" />
-                        <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <Separator prefWidth="200.0" />
+                        <Separator opacity="0.4" prefWidth="200.0" />
+                        <HBox VBox.vgrow="ALWAYS">
+                           <children>
+                              <TableView fx:id="tblFilesRo" HBox.hgrow="ALWAYS">
+                                <columns>
+                                  <TableColumn fx:id="tColFileName" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" sortable="false" text="File Name" />
+                                  <TableColumn fx:id="tColSourcePath" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="286.0" sortable="false" text="Source Path" />
+                                    <TableColumn fx:id="tColFileType" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" sortable="false" text="File Type" />
+                                    <TableColumn fx:id="tColDestinationPath" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="286.0" sortable="false" text="Destination Path" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <AnchorPane style="-fx-border-width: 0 0 0 1; -fx-border-color: #333;" HBox.hgrow="NEVER">
+                                 <children>
+                                    <ToolBar orientation="VERTICAL" prefWidth="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                      <items>
+                                        <Button fx:id="btnRoRemove" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Remove">
+                                             <tooltip>
+                                                <Tooltip text="Remove Selected" />
+                                             </tooltip>
+                                             <graphic>
+                                                <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../res/delete-file.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Button fx:id="btnRoClear" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="clear">
+                                             <tooltip>
+                                                <Tooltip text="Clear All" />
+                                             </tooltip>
+                                             <graphic>
+                                                <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../res/remove.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                      </items>
+                                    </ToolBar>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <Separator opacity="0.5" prefWidth="200.0" />
                         <HBox id="archive-footer-pane" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" spacing="10.0" VBox.vgrow="NEVER">
                            <children>
                               <VBox id="vbox-bordered" alignment="CENTER" layoutX="600.0" layoutY="15.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="90.0" spacing="10.0" HBox.hgrow="ALWAYS">
@@ -315,7 +374,7 @@
                                     <Label text="Source Directory :" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <TextField fx:id="txtSourceDirectory" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" HBox.hgrow="ALWAYS" />
+                                          <TextField fx:id="txtSourceDirectory" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" HBox.hgrow="ALWAYS" />
                                           <Button id="btn-without-border" fx:id="btnRoBrowserSource" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="Directory" HBox.hgrow="NEVER">
                                              <graphic>
                                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -369,7 +428,7 @@
                               <VBox id="vbox-bordered" alignment="CENTER" layoutX="796.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="150.0" spacing="10.0">
                                  <children>
                                     <Label text="Click to Process" VBox.vgrow="NEVER" />
-                                    <Button id="btn-without-border" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Extract">
+                                    <Button id="btn-without-border" fx:id="btnReorganise" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Extract">
                                        <graphic>
                                           <ImageView id="dark-blue-btn" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                                              <image>

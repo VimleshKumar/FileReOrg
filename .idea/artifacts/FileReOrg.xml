@@ -1,0 +1,29 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="FileReOrg">
+    <output-path>$PROJECT_DIR$/out/artifacts/FileReOrg</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="fileReOrg.FileReOrgApp" />
+        <option name="description" value="The Tool will tackle the mess by classifying all the files in the given folder according to file type. File type identification will be done using Apache Tika. And to tackle space issues, Files Compression and decompression will be used." />
+        <option name="height" value="640" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="icons">
+          <JavaFxApplicationIcons>
+            <option name="linuxIcon" value="$PROJECT_DIR$/src/fileReOrg/res/FileReOrgIcon-Z.png" />
+            <option name="windowsIcon" value="$PROJECT_DIR$/src/fileReOrg/res/FileReOrgIcon-Z.ico" />
+          </JavaFxApplicationIcons>
+        </option>
+        <option name="nativeBundle" value="all" />
+        <option name="title" value="File ReOrg" />
+        <option name="vendor" value="Ociedus Team" />
+        <option name="version" value="v1.0.0-beta" />
+        <option name="width" value="960" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="FileReOrg.jar">
+        <element id="module-output" name="FileReOrg" />
+      </element>
+    </root>
+  </artifact>
+</component>

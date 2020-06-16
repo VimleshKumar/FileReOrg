@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package fileReOrg.ui;
 
 import fileReOrg.beans.FileDetailBean;
@@ -38,7 +37,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
 
@@ -50,7 +48,6 @@ import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class MainAppController {
@@ -143,7 +140,6 @@ public class MainAppController {
     private TableColumn<FileDetailBean, String> tColFileType;
     @FXML
     private TableColumn<FileDetailBean, String> tColDestinationPath;
-
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
@@ -274,7 +270,6 @@ public class MainAppController {
         //set footer msg to ready
         footerMessage.setText("Ready.");
 
-
     }//End initialize()
 
     /**
@@ -325,9 +320,9 @@ public class MainAppController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About File ReOrg");
         alert.setHeaderText("File ReOrg v1.0.0-beta");
-        alert.setContentText("This is a data organiser tool. It can help in reorganising data and archiving data.\n" +
-                "Developed By Oceidus Team.\n" +
-                "Developers: Jyoti Kumari & Vimlesh Kumar");
+        alert.setContentText("This is a data organiser tool. It can help in reorganising data and archiving data.\n"
+                + "Developed By Oceidus Team.\n"
+                + "Developers: Jyoti Kumari & Vimlesh Kumar");
         alert.show();
     };
 
@@ -336,7 +331,6 @@ public class MainAppController {
         Stage stage = (Stage) titleBarPane.getScene().getWindow();
         closeApp(stage);
     };
-
 
     /**
      * MenuBar Event Handlers
@@ -356,7 +350,6 @@ public class MainAppController {
             ReorganisePane.setVisible(true);
         }
     };
-
 
     /**
      * Archiver EventHandler
@@ -446,8 +439,9 @@ public class MainAppController {
                             throw (new Exception("Unsupported Archive Type!"));
                         }
                         for (String file : filesList) {
-                            String fileNameWithOutExt = FilenameUtils.removeExtension(new File(file).getName());
-                            String archiveFileName = outputFilePath + File.separator + fileNameWithOutExt + "_" + new Date().getTime() + archiveExtension;
+//                            String fileNameWithOutExt = FilenameUtils.removeExtension(new File(file).getName());
+                            String fileName = new File(file).getName();
+                            String archiveFileName = outputFilePath + File.separator + new Date().getTime() + "_" + fileName + archiveExtension;
 //                            String archiveFileName = outputFilePath + File.separator + fileNameWithOutExt + archiveExtension;
                             archiveFile(file, archiveFileName, archive);
                         }
@@ -496,7 +490,6 @@ public class MainAppController {
         setFooterMessage("Not included in this release. Scheduled for next release.");
     };
 
-
     /**
      * Reorganizer EventHandler
      */
@@ -511,7 +504,7 @@ public class MainAppController {
         if (f != null && f.isDirectory()) {
             List<File> files = listFiles(f);
             FileDetailBean fb;
-            for (File file:files) {
+            for (File file : files) {
                 fb = new FileDetailBean(file.getName(), file.getAbsolutePath(), "", "", "");
                 FILE_DETAIL_BEANS.add(fb);
             }
@@ -521,13 +514,14 @@ public class MainAppController {
             setFooterMessage("Invalid Directory!");
         }
     };
-    List<File> listFiles(File file){
+
+    List<File> listFiles(File file) {
         List<File> files = new ArrayList<>();
-        if(file.isFile()){
+        if (file.isFile()) {
             files.add(file);
-        } else if(file.isDirectory()){
+        } else if (file.isDirectory()) {
             File[] fs = file.listFiles();
-            for (File f: fs){
+            for (File f : fs) {
                 files.addAll(listFiles(f));
             }
         }
@@ -548,7 +542,7 @@ public class MainAppController {
     };
     // btnRoClear
     EventHandler<ActionEvent> btnRoClearHandler = (ActionEvent event) -> {
-        if(FILE_DETAIL_BEANS.size() > 0) {
+        if (FILE_DETAIL_BEANS.size() > 0) {
             FILE_DETAIL_BEANS.clear();
             tblFilesRo.refresh();
             footerMessage.setText("All Files Cleared.");
@@ -572,12 +566,11 @@ public class MainAppController {
         }
     };
 
-
     // btnReorganise
     EventHandler<ActionEvent> btnReorganiseHandler = (ActionEvent event) -> {
-        if(!processRunning){
+        if (!processRunning) {
             if (isReorganizable()) {
-                if(moveReorganisedFiles()){
+                if (moveReorganisedFiles()) {
                     setFooterMessage("Reorganisation Complete.");
                 }
             }
@@ -586,11 +579,11 @@ public class MainAppController {
         }
     };
 
-    boolean isReorganizable(){
-        if(txtOutputDirectoryReorganiser.getText().equalsIgnoreCase("") || FILE_DETAIL_BEANS.isEmpty()){
+    boolean isReorganizable() {
+        if (txtOutputDirectoryReorganiser.getText().equalsIgnoreCase("") || FILE_DETAIL_BEANS.isEmpty()) {
             setFooterMessage("Something went wrong! Check all input values. ");
             return false;
-        } else if(new File(txtOutputDirectoryReorganiser.getText()).exists() && new File(txtOutputDirectoryReorganiser.getText()).isDirectory()){
+        } else if (new File(txtOutputDirectoryReorganiser.getText()).exists() && new File(txtOutputDirectoryReorganiser.getText()).isDirectory()) {
             if (!isFolderEmpty(new File(txtOutputDirectoryReorganiser.getText()))) {
                 setFooterMessage("Output folder is not empty!");
                 return false;
@@ -599,13 +592,13 @@ public class MainAppController {
         return true;
     }
 
-    boolean moveReorganisedFiles(){
+    boolean moveReorganisedFiles() {
         try {
             File outDir = new File(txtOutputDirectoryReorganiser.getText());
             if (!outDir.exists() || !outDir.isDirectory() || !isFolderEmpty(outDir)) {
                 outDir.mkdirs();
             }
-            if(!outDir.canWrite()) {
+            if (!outDir.canWrite()) {
                 setFooterMessage("Output Folder is not writable.");
                 return false;
             }
@@ -630,17 +623,17 @@ public class MainAppController {
                 setFooterMessage("Sub directories can not be created. Try Again.");
                 return false;
             }
-            for(FileDetailBean fileDetailBean: FILE_DETAIL_BEANS){
+            for (FileDetailBean fileDetailBean : FILE_DETAIL_BEANS) {
                 String mimeType = probeFileTypeUsingTika(new File(fileDetailBean.getFileSourcePath()));
                 fileDetailBean.setFileType(MimeTable.getValue(mimeType.trim()).trim());
                 fileDetailBean.setMimeType(mimeType);
                 String desFolder = TypeFolderProp.getValue(fileDetailBean.getMimeType());
-                if(desFolder.charAt(0) == '!'){
-                    if(desFolder.contains("audio")){
+                if (desFolder.charAt(0) == '!') {
+                    if (desFolder.contains("audio")) {
                         desFolder = "audios";
-                    } else if(desFolder.contains("video")){
+                    } else if (desFolder.contains("video")) {
                         desFolder = "videos";
-                    } else if(desFolder.contains("image")){
+                    } else if (desFolder.contains("image")) {
                         desFolder = "images";
                     } else {
                         desFolder = "unidentified";
@@ -649,14 +642,14 @@ public class MainAppController {
                 String destinationPath = outDir.getAbsolutePath() + File.separator + desFolder + File.separator + fileDetailBean.getFileName();
                 File source = new File(fileDetailBean.getFileSourcePath());
                 File destination = new File(destinationPath);
-                if(destination.exists()){
+                if (destination.exists()) {
                     String suffix = "_from_" + source.toPath().getParent().toFile().getName(); //get parent directory name
-                    if(suffix == null || suffix.equalsIgnoreCase("")){
+                    if (suffix == null || suffix.equalsIgnoreCase("")) {
                         suffix = "_1";
                     }
                     suffix = suffix.replaceAll("[^a-zA-Z0-9/_]", ""); //special chars cleanup
                     destinationPath = outDir.getAbsolutePath() + File.separator + desFolder + File.separator
-                            + FilenameUtils.removeExtension(fileDetailBean.getFileName()) + suffix +"."
+                            + FilenameUtils.removeExtension(fileDetailBean.getFileName()) + suffix + "."
                             + FilenameUtils.getExtension(fileDetailBean.getFileName());
                     destination = new File(destinationPath);
                 }
@@ -673,19 +666,19 @@ public class MainAppController {
         return true;
     }
 
-    boolean isFolderEmpty(File out){
-        if(out.listFiles().length > 0){
+    boolean isFolderEmpty(File out) {
+        if (out.listFiles().length > 0) {
             return false;
         }
         return true;
     }
 
     //TODO delete after release. Reason: Not in use anymore(causing extra iteration)
-    boolean processFilesForReorganisation(){
-        if(FILE_DETAIL_BEANS.isEmpty()){
+    boolean processFilesForReorganisation() {
+        if (FILE_DETAIL_BEANS.isEmpty()) {
             return false;
         } else {
-            for (FileDetailBean fdb : FILE_DETAIL_BEANS){
+            for (FileDetailBean fdb : FILE_DETAIL_BEANS) {
                 String mimeType = probeFileTypeUsingTika(new File(fdb.getFileSourcePath()));
                 fdb.setFileType(MimeTable.getValue(mimeType.trim()).trim());
                 fdb.setMimeType(mimeType);
@@ -695,9 +688,9 @@ public class MainAppController {
         }
     }
 
-    String probeFileTypeUsingTika(File file){
+    String probeFileTypeUsingTika(File file) {
 
-        String fileType= "Unidentified";
+        String fileType = "Unidentified";
         try {
             Tika tika = new Tika();
             fileType = tika.detect(file);
@@ -707,9 +700,9 @@ public class MainAppController {
         return fileType;
     }
 
-    String probeFileType(File file){
+    String probeFileType(File file) {
 
-        String fileType= "Unidentified";
+        String fileType = "Unidentified";
         try {
             fileType = Files.probeContentType(file.toPath());
         } catch (IOException e) {
@@ -717,7 +710,6 @@ public class MainAppController {
         }
         return fileType;
     }
-
 
     /**
      * Other utility methods
